@@ -3,7 +3,7 @@ package org.example.db.repository;
 import org.example.db.entity.Item3Entity;
 import org.example.db.entity.enums.StatusEnum;
 import org.example.db.entity.enums.TypeEnum;
-import org.example.db.projections.Item3View;
+import org.example.db.projections.ItemView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -85,7 +85,7 @@ public interface Item3Repository extends JpaRepository<Item3Entity, Long> {
         AND ( (:#{#types == null} = true) OR (i.type IN (:types)) ) 
       ORDER BY i.createdOn DESC
       """)
-  Page<Item3View> findItemsViewJpqlEnumsSpEl(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
+  Page<ItemView> findItemsViewJpqlEnumsSpEl(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<StatusEnum> statuses, @Param("types") List<TypeEnum> types, Pageable pageable);
 
   @Query("""
@@ -95,7 +95,7 @@ public interface Item3Repository extends JpaRepository<Item3Entity, Long> {
         AND ( (coalesce(:types, null) is null) OR (i.type IN (:types)) ) 
       ORDER BY i.createdOn DESC
       """)
-  Page<Item3View> findItemsViewJpqlEnumsCoalesce(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
+  Page<ItemView> findItemsViewJpqlEnumsCoalesce(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<StatusEnum> statuses, @Param("types") List<TypeEnum> types, Pageable pageable);
 
   @Query("""
@@ -105,7 +105,7 @@ public interface Item3Repository extends JpaRepository<Item3Entity, Long> {
         AND ( i.type IN (:types) ) 
       ORDER BY i.createdOn DESC
       """)
-  Page<Item3View> findItemsViewJpqlEnums(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
+  Page<ItemView> findItemsViewJpqlEnums(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<StatusEnum> statuses, @Param("types") List<TypeEnum> types, Pageable pageable);
 
   @Query(value = """
@@ -115,7 +115,7 @@ public interface Item3Repository extends JpaRepository<Item3Entity, Long> {
         AND ( (:#{#types == null} = true) OR (i.type IN (:types)) ) 
       ORDER BY i.created_on DESC
       """, nativeQuery = true)
-  Page<Item3View> findItemsViewNativeEnumsSpEl(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
+  Page<ItemView> findItemsViewNativeEnumsSpEl(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<Integer> statuses, @Param("types") List<Integer> types, Pageable pageable);
 
   @Query(value = """
@@ -125,7 +125,7 @@ public interface Item3Repository extends JpaRepository<Item3Entity, Long> {
         AND ( (coalesce(:types, null) is null) OR (i.type IN (:types)) ) 
       ORDER BY i.created_on DESC
       """, nativeQuery = true)
-  Page<Item3View> findItemsViewNativeEnumsCoalesce(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
+  Page<ItemView> findItemsViewNativeEnumsCoalesce(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<Integer> statuses, @Param("types") List<Integer> types, Pageable pageable);
 
   @Query(value = """
@@ -135,7 +135,7 @@ public interface Item3Repository extends JpaRepository<Item3Entity, Long> {
         AND ( i.type IN (:types) ) 
       ORDER BY i.created_on DESC
       """, nativeQuery = true)
-  Page<Item3View> findItemsViewNativeEnumsOnly(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
+  Page<ItemView> findItemsViewNativeEnumsOnly(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<Integer> statuses, @Param("types") List<Integer> types, Pageable pageable);
 
 }

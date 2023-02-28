@@ -3,6 +3,7 @@ package org.example.db.repository;
 import org.example.db.entity.ItemEntity;
 import org.example.db.entity.enums.StatusEnum;
 import org.example.db.entity.enums.TypeEnum;
+import org.example.db.projections.ItemView;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -186,51 +187,6 @@ public class ItemRepositoryTest {
   }
 
   @Test
-  void testFindItemsJpqlEnumsSpElString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<ItemEntity> pageResult =
-        itemRepository.findItemsJpqlEnumsSpElString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
-            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
-    assertEquals(1, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsCoalesceString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<ItemEntity> pageResult =
-        itemRepository.findItemsJpqlEnumsCoalesceString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
-            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
-    assertEquals(1, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsSpElNullString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<ItemEntity> pageResult =
-        itemRepository.findItemsJpqlEnumsSpElString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null, null,
-            PageRequest.of(0, 10));
-    assertEquals(2, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsCoalesceNullString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<ItemEntity> pageResult =
-        itemRepository.findItemsJpqlEnumsCoalesceString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null, null,
-            PageRequest.of(0, 10));
-    assertEquals(2, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<ItemEntity> pageResult =
-        itemRepository.findItemsJpqlEnumsString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
-            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
-    assertEquals(1, pageResult.getTotalElements());
-  }
-
-  @Test
   void testFindItemsNativeEnumsSpElString() {
     Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
     Page<ItemEntity> pageResult =
@@ -271,6 +227,114 @@ public class ItemRepositoryTest {
     Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
     Page<ItemEntity> pageResult =
         itemRepository.findItemsNativeEnumsOnlyString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
+    assertEquals(1, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsSpEl() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsSpEl(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE), List.of(TypeEnum.TYPE_ONE), PageRequest.of(0, 10));
+    assertEquals(1, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsSpEl2() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsSpEl(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE, StatusEnum.STATUS_TWO), null, PageRequest.of(0, 10));
+    assertEquals(2, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsCoalesce() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsCoalesce(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE), List.of(TypeEnum.TYPE_ONE), PageRequest.of(0, 10));
+    assertEquals(1, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindViewItemsNativeEnumsCoalesce2() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsCoalesce(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE, StatusEnum.STATUS_TWO), null, PageRequest.of(0, 10));
+    assertEquals(1, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsSpElNull() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsSpEl(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null, null,
+            PageRequest.of(0, 10));
+    assertEquals(2, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsCoalesceNull() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsCoalesce(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null, null,
+            PageRequest.of(0, 10));
+    assertEquals(2, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsOnly() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsOnly(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE), List.of(TypeEnum.TYPE_ONE), PageRequest.of(0, 10));
+    assertEquals(1, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsSpElString() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsSpElString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
+    assertEquals(1, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsCoalesceString() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsCoalesceString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
+            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
+    assertEquals(1, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsSpElNullString() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsSpElString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null,
+            null, PageRequest.of(0, 10));
+    assertEquals(2, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsCoalesceNullString() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsCoalesceString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null,
+            null, PageRequest.of(0, 10));
+    assertEquals(2, pageResult.getTotalElements());
+  }
+
+  @Test
+  void testFindItemsViewNativeEnumsOnlyString() {
+    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
+    Page<ItemView> pageResult =
+        itemRepository.findItemsViewNativeEnumsOnlyString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
             List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
     assertEquals(1, pageResult.getTotalElements());
   }

@@ -6,7 +6,7 @@ import org.example.db.entity.enums.TypeEnum;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public interface Item3View {
+public interface ItemView {
   Long getId();
 
   BigDecimal getAmount();

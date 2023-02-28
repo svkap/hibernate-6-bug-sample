@@ -47,36 +47,6 @@ public interface Item2Repository extends JpaRepository<Item2Entity, Long> {
   Page<Item2Entity> findItemsJpqlEnums(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<StatusEnum> statuses, @Param("types") List<TypeEnum> types, Pageable pageable);
 
-  @Query("""
-      SELECT i FROM Item2Entity i WHERE 
-        (:dateFrom <= i.createdOn) AND (:dateTo >= i.createdOn) 
-        AND ( (:#{#statuses == null} = true) OR (i.status IN (:statuses)) ) 
-        AND ( (:#{#types == null} = true) OR (i.type IN (:types)) ) 
-      ORDER BY i.createdOn DESC
-      """)
-  Page<Item2Entity> findItemsJpqlEnumsSpElString(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
-      @Param("statuses") List<String> statuses, @Param("types") List<String> types, Pageable pageable);
-
-  @Query("""
-      SELECT i FROM Item2Entity i WHERE 
-        (:dateFrom <= i.createdOn) AND (:dateTo >= i.createdOn) 
-        AND ( (coalesce(:statuses, null) is null) OR (i.status IN (:statuses)) ) 
-        AND ( (coalesce(:types, null) is null) OR (i.type IN (:types)) ) 
-      ORDER BY i.createdOn DESC
-      """)
-  Page<Item2Entity> findItemsJpqlEnumsCoalesceString(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
-      @Param("statuses") List<String> statuses, @Param("types") List<String> types, Pageable pageable);
-
-  @Query("""
-      SELECT i FROM Item2Entity i WHERE 
-        (:dateFrom <= i.createdOn) AND (:dateTo >= i.createdOn) 
-        AND ( i.status IN (:statuses) ) 
-        AND ( i.type IN (:types) ) 
-      ORDER BY i.createdOn DESC
-      """)
-  Page<Item2Entity> findItemsJpqlEnumsString(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
-      @Param("statuses") List<String> statuses, @Param("types") List<String> types, Pageable pageable);
-
   @Query(value = """
       SELECT i FROM item_2 i WHERE 
         (:dateFrom <= i.created_on) AND (:dateTo >= i.created_on) 
@@ -136,4 +106,5 @@ public interface Item2Repository extends JpaRepository<Item2Entity, Long> {
       """, nativeQuery = true)
   Page<Item2Entity> findItemsNativeEnumsOnlyString(@Param("dateFrom") Instant dateFrom, @Param("dateTo") Instant dateTo,
       @Param("statuses") List<String> statuses, @Param("types") List<String> types, Pageable pageable);
+
 }

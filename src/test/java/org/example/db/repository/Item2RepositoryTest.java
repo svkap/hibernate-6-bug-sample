@@ -187,51 +187,6 @@ public class Item2RepositoryTest {
   }
 
   @Test
-  void testFindItemsJpqlEnumsSpElString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<Item2Entity> pageResult =
-        item2Repository.findItemsJpqlEnumsSpElString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
-            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
-    assertEquals(1, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsCoalesceString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<Item2Entity> pageResult =
-        item2Repository.findItemsJpqlEnumsCoalesceString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
-            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
-    assertEquals(1, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsSpElNullString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<Item2Entity> pageResult =
-        item2Repository.findItemsJpqlEnumsSpElString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null, null,
-            PageRequest.of(0, 10));
-    assertEquals(2, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsCoalesceNullString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<Item2Entity> pageResult =
-        item2Repository.findItemsJpqlEnumsCoalesceString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS), null,
-            null, PageRequest.of(0, 10));
-    assertEquals(2, pageResult.getTotalElements());
-  }
-
-  @Test
-  void testFindItemsJpqlEnumsString() {
-    Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
-    Page<Item2Entity> pageResult =
-        item2Repository.findItemsJpqlEnumsString(time.minus(1, ChronoUnit.DAYS), time.plus(1, ChronoUnit.DAYS),
-            List.of(StatusEnum.STATUS_ONE.name()), List.of(TypeEnum.TYPE_ONE.name()), PageRequest.of(0, 10));
-    assertEquals(1, pageResult.getTotalElements());
-  }
-
-  @Test
   void testFindItemsNativeEnumsSpElString() {
     Instant time = OffsetDateTime.parse("2023-02-27T10:00+00:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME).toInstant();
     Page<Item2Entity> pageResult =
